@@ -112,8 +112,7 @@ app.get("/blog", (req, res) => {
   SELECT * FROM articles ORDER BY date DESC`
     , [], (err, results) => {
       if (err) {
-        
-        
+        console.log("error")
       } else {
         console.log(results)
         
