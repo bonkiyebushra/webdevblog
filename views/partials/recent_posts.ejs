@@ -1,0 +1,12 @@
+<div id="recent_posts">
+  <h2>Recent posts</h2>
+  <% articles.forEach((article)=> { %>
+    <% 
+    title = article.title 
+    articleReg1 = /[^a-zA-Z0-9 ]+/g;
+    articleReg2 = /[^a-zA-Z0-9]+/g;
+    slug = `/blog/${title.replace(articleReg1,"").replace(articleReg2,"-").toLowerCase()}`
+    %>
+  <a href=<%=slug%> ><p><%=title%></p> </a>
+  <% }) %>
+</div>

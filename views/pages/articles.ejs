@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container">
+    <header><%- include('../partials/header'); %></header>
+
+    <main>
+      <div id="main_section">
+        <div class="articles">
+          <% articles.forEach((article)=> { %>
+          <div class="article">
+            <% 
+              title = article.title 
+              articleReg1 = /[^a-zA-Z0-9 ]+/g;
+              articleReg2 = /[^a-zA-Z0-9]+/g;
+              slug = `/blog/${title.replace(articleReg1,"").replace(articleReg2,"-").toLowerCase()}`
+            %>
+            <a href=<%=slug%> ><h2><%=title%></h2> </a>
+            <p><%= article.date.toDateString() %></p>
+            <p><%- converter.makeHtml(article.body.substring(0,400))+" ..." %></p>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+      <%- include("../partials/recent_posts"), {articles:articles} %>
+    </main>
+
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+</html>

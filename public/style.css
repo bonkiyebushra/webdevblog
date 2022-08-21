@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+pre {
+  background-color: RGB(248, 248, 248);
+}
+
+html {
+  font-family: "Lusitana", serif;
+  font-size: 16px;
+}
+
+a {
+  color: rgb(4, 139, 139);
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+header {
+  background-color: rgb(174, 187, 201);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  padding: 0 10rem;
+}
+
+header a {
+  color: #003300;
+  font-size: 1.2rem;
+}
+
+#logo {
+  width: 3.5rem;
+}
+
+nav a {
+  margin-right: 1rem;
+}
+
+main {
+  padding-left: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#main_section {
+  min-width: 40rem;
+  padding-right: 4rem;
+  margin-top: 4rem;
+  font-family: "Lato", sans-serif;
+}
+
+#post_body {
+  /* text-align: center; */
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+#articles {
+  margin-bottom: 3rem;
+}
+
+.article {
+  margin-bottom: 2rem;
+}
+
+.article * {
+  margin-bottom: 0.5rem;
+}
+
+#recent_posts {
+  margin-top: 4rem;
+  /* margin-left: auto; */
+
+  min-width: 25rem;
+}
+
+#recent_posts p {
+  margin-bottom: 0.75rem;
+}
+
+a * {
+  width: fit-content;
+}
+
+#article_title {
+  height: 2rem;
+}
+
+
+
+/* Edit table */
+
+table {
+  text-align: left;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: solid 0.5px gray;
+  padding-left: 0.5rem;
+}
+
+
+footer {
+  margin-top: auto;
+}

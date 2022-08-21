@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../partials/head',{pageTitle:article.title}); %>
+  </head>
+  <style>
+    img {
+      width: 20rem;
+    }
+  </style>
+  <body class="container">
+    <header><%- include('../../partials/header'); %></header>
+    <main>
+      <div id="main_section">
+        <h2><%= article.title%></h2>
+        <p><%= article.date %></p>
+        <div id="post_body"><%- converter.makeHtml(article.body)%></div>
+      </div>
+      <%- include("../../partials/recent_posts"); %>
+    </main>
+    <footer><%- include('../../partials/footer'); %></footer>
+  </body>
+</html>

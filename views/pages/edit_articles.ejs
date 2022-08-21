@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <style>
+    img {
+      width: 20rem;
+    }
+  </style>
+  <body class="container">
+    <header><%- include('../partials/header'); %></header>
+    <main>
+      <div id="main_section">
+        <h1>Edit Posts</h1>
+        <table class="articles">
+          <tr>
+            <th>Title</th>
+            <th>Date published</th>
+            <th>Subtitle/sample</th>
+          
+          </tr>
+          <% articles.forEach((article)=> { %>
+            <tr class="article">
+              <%
+                title = article.title 
+                articleReg1 = /[^a-zA-Z0-9 ]+/g;
+                articleReg2 = /[^a-zA-Z0-9]+/g;
+                slug = `/blog/${article.slug}/edit`
+              %>
+              <td><a href=<%=slug%> ><h2><%=title%></h2> </a></td>
+              <td><%= article.date.toDateString() %></>
+              <td><%= article.body.substring(0,400)+" ..." %></>
+            </tr>
+            <% }) %>
+        </table>
+      </div>
+    </main>
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+</html>

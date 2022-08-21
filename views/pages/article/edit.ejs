@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head',{pageTitle:`Edit ${article.title}`}); %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
+    <link href="/create_edit_page_styles.css" rel="stylesheet" type="text/css">
+</head>
+<body class="container">
+  <header>
+    <%- include('../../partials/header'); %>
+  </header>
+
+  <main>
+    <form action="" method="post">
+      <div id="new_edit_top">
+        <div class="label_input" id="article_title">
+          <label>Title</label>
+          <input type="text" name="title" value="<%=article.title%>" disabled />
+        </div>
+        <div class="label_input" id="article_sample">
+          <label>Sample</label>
+          <textarea type="text" name="sample"><%=article.sample%></textarea>
+        </div>
+      </div>
+      <div id="body_box">
+        <textarea id="body" name="body">
+        <%= article.body%></textarea>
+      </div>
+      <button>Update Post</button>
+      <div id="body_preview"></div>
+    </form>
+    
+  </main>
+
+  <footer>
+    <%- include('../../partials/footer'); %>
+  </footer>
+  <script>
+    let conv = new showdown.Converter();
+    let bodyEle = document.getElementById("body");
+    let previewEle = document.getElementById("body_preview");
+    previewEle.innerHTML = conv.makeHtml(bodyEle.value);
+
+    const updatePreview = () => {
+
+      previewEle.innerHTML = conv.makeHtml(bodyEle.value);
+      console.log("bodyEle.innerHTML")
+    };
+
+    bodyEle.addEventListener("input", updatePreview);
+    bodyEle.addEventListener("keyup", updatePreview);
+  </script>
+</body>
+
+</html>
