@@ -1,0 +1,11 @@
+Article search
+- By title as well as post body words
+- Tag/keywords
+
+Tags
+- Tags for each post such as:
+- Personal
+- Web dev: Node,HTML,CSS,Javascript,React
+- Tutorial
+- Opinion Piece
+- Daily/weekly Something

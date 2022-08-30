@@ -4,36 +4,66 @@
     <%- include('../partials/head'); %>
   </head>
   <style>
-    img {
-      width: 20rem;
-    }
+      img {
+        width: 20rem;
+      }
+
+      #sample_column {
+        width: 45rem;
+      }
+
+      .actions_column {
+        width: 8rem;
+      }
+
+      .actions_column a {
+        margin-right: 1rem;
+      }
+
+      .delete {
+        /* margin-left: 1rem; */
+        color: red;
+      }
+
+      .show {
+        color: green;
+      }
   </style>
   <body class="container">
     <header><%- include('../partials/header'); %></header>
     <main>
       <div id="main_section">
-        <h1>Edit Posts</h1>
-        <table class="articles">
-          <tr>
-            <th>Title</th>
-            <th>Date published</th>
-            <th>Subtitle/sample</th>
-          
-          </tr>
-          <% articles.forEach((article)=> { %>
-            <tr class="article">
-              <%
-                title = article.title 
-                articleReg1 = /[^a-zA-Z0-9 ]+/g;
-                articleReg2 = /[^a-zA-Z0-9]+/g;
-                slug = `/blog/${article.slug}/edit`
-              %>
-              <td><a href=<%=slug%> ><h2><%=title%></h2> </a></td>
-              <td><%= article.date.toDateString() %></>
-              <td><%= article.body.substring(0,400)+" ..." %></>
+        <h1>Manage Posts</h1>
+        <form>
+          <table class="articles">
+            <tr>
+              <th>Title</th>
+              <th>Date published</th>
+              <th id="sample_column">Subtitle/sample</th>
+              <th>Actions</th>
             </tr>
-            <% }) %>
-        </table>
+            <% articles.forEach((article)=> { %>
+              <tr class="article">
+                <%
+                  title = article.title 
+                  articleReg1 = /[^a-zA-Z0-9 ]+/g;
+                  articleReg2 = /[^a-zA-Z0-9]+/g;
+                  slug = `/blog/${article.slug}`
+                  editSlug = `${slug}/edit`
+                  deleteSlug = `${slug}/delete`
+                %>
+                <td><a href=<%=slug%> ><h2><%=title%></h2> </a></td>
+                <td><%= article.publish_date.toDateString() %>
+                <td class="sample_column"><%= article.body_sample %>
+                <td class="actions_column">
+                  <a href=<%= slug %> class="show" >Show</a>
+                  <a href=<%= editSlug %> >Edit</a>
+                  <a href=<%= deleteSlug  %> class="delete" >Delete</a>
+                </td>
+              </tr>
+              <% }) %>
+          </table>
+        </form>
       </div>
     </main>
     <footer><%- include('../partials/footer'); %></footer>

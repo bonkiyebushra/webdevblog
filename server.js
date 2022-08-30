@@ -1,73 +1,27 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import loremIpsum from './loremIpsum.js';
-import { readFile } from 'fs/promises';
-import fs from 'fs';
 import showdown from "showdown"
 import { pool } from "./dbConfig.js";
 import slugify from "slugify"
-import { exit } from 'process';
-import { resolve } from 'path';
 
 let converter = new showdown.Converter();
 
-const articlesJson = JSON.parse(
-  await readFile(
-    new URL('./articles.json', import.meta.url)
-  )
-);
-
-// function promisePractice () {
-//   let is_shop_open = false;
-//   let promise = new Promise((resolve,reject)=> {
-//     if(is_shop_open) {
-//       resolve();
-//     } else {
-//       reject("Shop is closed");
-//     }
-//   })
-
-//   promise.then(()=> {
-//     
-//   }).catch(
-//     
-//   );
-
-// }
-
-// promisePractice();
-
 let app = express();
-app.use(express.static("public"));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// let getArticles = async () => {
+//   return pool.query(`
+//   SELECT * FROM articles`
+//     , [], (err, results) => {
+//       if (err) {
 
-let date = new Date();
-let today = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
-
-let slugs = {
-  "my-first-post": 0,
-  "my-second-post": 1,
-  "third-post": 2,
-  "fourth-post": 3
-}
-
-let getArticles = async () => {
-  return pool.query(`
-  SELECT * FROM articles`
-    , [], (err, results) => {
-      if (err) {
-        
-        
-        return "Error"
-      } else {
-        // 
-        resolve(results)
-        // res.render("pages/articles", { articles: results.rows })
-      }
-    }
-  )
-}
+//         return "Error"
+//       } else {
+//         // 
+//         resolve(results)
+//       }
+//     }
+//   )
+// }
 
 // let createPost = (title, date, slug, body) => {
 //   pool.query(
@@ -85,38 +39,25 @@ let getArticles = async () => {
 //   )
 // }
 
-let json = articlesJson
-
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 const PORT = 3000;
-
-// app.use(express.static("public"))
-
-// app.get("/articles",(req,res,next)=>{
-//     // 
-//     res.json(json)
-//     next();
-// })
-
 app.set('view engine', 'ejs');
-
-
 
 app.get("/", (req, res) => {
   res.redirect("/blog")
 })
 
 app.get("/blog", (req, res) => {
-  console.log("Hello,This is the web page")
   pool.query(`
-  SELECT * FROM articles ORDER BY date DESC`
+  SELECT * FROM articles ORDER BY publish_date DESC`
     , [], (err, results) => {
       if (err) {
-        console.log("error")
+        console.log(err)
       } else {
-        console.log(results)
-        
-        res.render("pages/articles", { articles: results.rows,converter })
+        res.render("pages/articles", { articles: results.rows, converter,userType:"admin" })
       }
     }
   )
@@ -133,19 +74,19 @@ app.post("/blog/new", (req, res) => {
   //     date:today,
   //     bodySample: req.body.body
   // })
-  let { title, body } = req.body;
+  let { title, sample,body } = req.body;
 
   // let data = JSON.stringify(json);
   // fs.writeFileSync('articles.json', data);
   // createPost(title, today, slugify(title), body, res)
   pool.query(
     `
-    INSERT INTO articles (title,date,slug,body) 
+    INSERT INTO articles (title,slug,body_sample,body) 
     VALUES ($1,$2,$3,$4)
-    RETURNING title,date,slug,body`
-    , [title, today, slugify(title, { lower: true }), body], (err) => {
+    RETURNING title,slug,body_sample,body`
+    , [title, slugify(title, { lower: true }), sample,body], (err) => { //TODO: Make sure markdown body is encoded correctly
       if (err) {
-        
+        console.log(err)
       } else {
         res.redirect("/blog")
       }
@@ -155,17 +96,15 @@ app.post("/blog/new", (req, res) => {
 })
 
 app.get("/blog/new", (req, res) => {
-
   res.render("pages/new_post", {})
 })
 
-app.get("/blog/edit",(req,res)=> {
+app.get("/blog/edit", (req, res) => {
   pool.query(`
-  SELECT * FROM articles ORDER BY date DESC`
+  SELECT * FROM articles ORDER BY publish_date DESC`
     , [], (err, results) => {
       if (err) {
-        
-        
+        console.log(err)
       } else {
         res.render("pages/edit_articles", { articles: results.rows })
       }
@@ -173,50 +112,71 @@ app.get("/blog/edit",(req,res)=> {
   )
 })
 
-app.get("/blog/:slug/edit/",(req,res)=> {
-  
+app.get("/blog/:slug/edit/", (req, res) => {
+
   let slug = req.params['slug']
   pool.query(`
         SELECT * FROM articles WHERE slug=$1 LIMIT 1`
-          , [slug], (err, results) => {
-            if (err) {
-              
-              redirect("blog")
-            } else {
-              let article = results['rows'][0]
-              if (article) {
-                res.render("pages/article/edit",{article,slug})
-              } else {
-                res.redirect("/blog") //TODO: Toast to show ERROR
-              }
-            }
-          }
-        )
-  
+    , [slug], (err, results) => {
+      if (err) {
+         console.log(err)
+        redirect("blog")
+      } else {
+        let article = results['rows'][0]
+        if (article) {
+          res.render("pages/article/edit", { article, slug })
+        } else {
+          res.redirect("/blog") //TODO: Toast to show ERROR
+        }
+      }
+    }
+  )
+
 })
 
-app.post("/blog/:slug/edit/",(req,res)=> {
-  
+app.get("/blog/:slug/delete", (req, res) => {
   let slug = req.params['slug']
-  const {body} = req.body
+
   pool.query(`
-        UPDATE articles SET body=$1 WHERE slug=$2`
-          , [body,slug], (err, results) => {
-            if (err) {
-              
-              // redirect("blog")
-            } else {
-              res.redirect("/blog")
-              // let article = results['rows'][0]
-              // if (article) {
-              //   res.render("pages/article/edit",{article})
-              // } else {
-              //   res.redirect("/blog") //TODO: Toast to show ERROR
-              // }
-            }
-          }
-        )
-  
+      DELETE FROM articles WHERE slug=$1`, 
+      [slug], (err, results) => {
+      if(err) {
+        console.log(err)
+      } else {
+        res.redirect("/blog/edit")
+      }
+  })
+
+})
+
+app.post("/blog/:slug/edit/", (req, res) => {
+
+  let slug = req.params['slug']
+  const { body,sample } = req.body
+  pool.query(`
+        UPDATE articles SET body=$1,body_sample=$2 WHERE slug=$3`
+    , [body, sample,slug], (err, results) => {
+      if (err) {
+        console.log(err)
+        // redirect("blog")
+        //TODO: FIND A WAY TO SHOW TOAST WITH ERRORS-Look into doing it using axaj if form fields are to be persisted
+      } else {
+        res.redirect("/blog")
+      }
+    }
+  )
+
+})
+
+app.post("/blog/:slug/edit/preview",(req,res)=> {
+  console.log("Hit")
+  // console.log(req.body)
+  res.render("pages/article/preview",{preview:"Hello World"})
+  // res.redirect("/blog")
+})
+
+app.get("/blog/:slug/edit/preview",(req,res)=> {
+  console.log("Hi")
 })
 
 app.get("/blog/:slug", (req, res) => {
@@ -227,7 +187,7 @@ app.get("/blog/:slug", (req, res) => {
     SELECT * FROM articles`
     , [], (err, results) => {
       if (err) {
-        
+        console.log(err)
       } else {
         // 
         let articles = results['rows']
@@ -235,13 +195,14 @@ app.get("/blog/:slug", (req, res) => {
         SELECT * FROM articles WHERE slug=$1 LIMIT 1`
           , [slug], (err, results) => {
             if (err) {
-              
-              redirect("blog")
+              redirect("")
             } else {
               let article = results['rows'][0]
               if (articles && article) {
                 res.render("pages/article/show", { article, articles, converter })
               } else {
+                console.log("Article Doesn't exist")
+                console.log(article)
                 res.redirect("/blog") //TODO: Toast to show ERROR
               }
             }

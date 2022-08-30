@@ -3,21 +3,28 @@
   <head>
     <%- include('../../partials/head',{pageTitle:article.title}); %>
   </head>
-  <style>
-    img {
-      width: 20rem;
-    }
-  </style>
   <body class="container">
     <header><%- include('../../partials/header'); %></header>
     <main>
       <div id="main_section">
-        <h2><%= article.title%></h2>
+        <h1><%= article.title%></h1>
         <p><%= article.date %></p>
         <div id="post_body"><%- converter.makeHtml(article.body)%></div>
       </div>
       <%- include("../../partials/recent_posts"); %>
     </main>
     <footer><%- include('../../partials/footer'); %></footer>
+    <script>
+      // let ele = document.getElementsByTagName("pre")
+      // let text = document.createElement("div")
+      // text.textContent = "Hi"
+      // let clipboard = document.createElement("img")
+      // clipboard.src = "/images/copy.svg"
+      // for(let i =0;i< ele.length;i++) {
+      //   ele[i].lastElementChild.appendChild(text)
+      //   console.log(ele[i])
+      // }
+      
+    </script>
   </body>
 </html>

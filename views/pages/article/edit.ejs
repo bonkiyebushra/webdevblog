@@ -3,9 +3,11 @@
 
 <head>
   <%- include('../../partials/head',{pageTitle:`Edit ${article.title}`}); %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.0/showdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link href="/create_edit_page_styles.css" rel="stylesheet" type="text/css">
 </head>
+
 <body class="container">
   <header>
     <%- include('../../partials/header'); %>
@@ -13,7 +15,7 @@
 
   <main>
     <form action="" method="post">
-      <div id="new_edit_top">
+      <div id="top">
         <div class="label_input" id="article_title">
           <label>Title</label>
           <input type="text" name="title" value="<%=article.title%>" disabled />
@@ -23,33 +25,71 @@
           <textarea type="text" name="sample"><%=article.sample%></textarea>
         </div>
       </div>
-      <div id="body_box">
-        <textarea id="body" name="body">
-        <%= article.body%></textarea>
+      <div id="bottom">
+        <div id="left">
+          <div id="body_box">
+            <textarea id="body" name="body"><%= article.body%></textarea>
+          </div>
+        </div>
+        <div id="body_preview">
+            <a onclick="openPreview()" target="_blank" id="full_body_review_link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path
+                  d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z" />
+              </svg>
+            </a>
+        </div>
       </div>
-      <button>Update Post</button>
-      <div id="body_preview"></div>
+      <button id="create_update_btn">Update Post</button>
     </form>
-    
   </main>
 
   <footer>
     <%- include('../../partials/footer'); %>
   </footer>
   <script>
-    let conv = new showdown.Converter();
+    let conv = new showdown.Converter({emoji:true,strikethrough:true, tables:true});
     let bodyEle = document.getElementById("body");
     let previewEle = document.getElementById("body_preview");
-    previewEle.innerHTML = conv.makeHtml(bodyEle.value);
+    let originalHTML = previewEle.innerHTML
+    previewEle.innerHTML = originalHTML + conv.makeHtml(bodyEle.value);
 
     const updatePreview = () => {
-
-      previewEle.innerHTML = conv.makeHtml(bodyEle.value);
-      console.log("bodyEle.innerHTML")
+      previewEle.innerHTML = originalHTML + conv.makeHtml(bodyEle.value);
     };
 
     bodyEle.addEventListener("input", updatePreview);
     bodyEle.addEventListener("keyup", updatePreview);
+
+    const BASE_URL = "localhost:3000"
+
+    function openPreview() {
+      let myWindow = window.open("", "window", " toolbar=0, location=0, menubar=0");
+      myWindow.document.write(`
+      <head>
+        <link href="/create_edit_page_styles.css" rel="stylesheet" type="text/css">
+        <link href="/style.css" rel="stylesheet" type="text/css">
+        <style>
+
+          #popup_preview {
+            width:75%;
+            overflow-wrap:break-word;
+          }
+
+        </style>
+      </head>
+      <body>
+        <main>
+          <div id="popup_preview">
+            ${conv.makeHtml(bodyEle.value)}
+          </div>
+        </main>
+      </body>
+      `);
+    }
+
   </script>
 </body>
 
