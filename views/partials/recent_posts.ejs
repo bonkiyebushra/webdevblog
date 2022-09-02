@@ -8,6 +8,6 @@
     articleReg2 = /[^a-zA-Z0-9]+/g;
     slug = `/blog/${title.replace(articleReg1,"").replace(articleReg2,"-").toLowerCase()}`
     %>
-  <a href=<%=slug%> ><p><%=title%></p> </a>
+  <p><a href=<%=slug%> ><%=title%></a></p>
   <% } %>
 </div>

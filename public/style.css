@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-a h2 {
-  display: inline;
-}
-
 html {
   font-family: "Lusitana", serif;
   font-size: 16px;
@@ -135,4 +131,8 @@ th {
 
 footer {
   margin-top: auto;
+}
+
+#errors {
+  color: rgb(160, 29, 29);
 }

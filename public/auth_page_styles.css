@@ -1,0 +1,42 @@
+body {
+    background-color: rgb(174, 187, 201);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 0rem;
+    align-items: center;
+    background-color: #80b3d7;
+    border: 1.5px solid #356f6f;
+    width: 30rem;
+    border-radius: 2rem;
+}
+
+form div label {
+    display: block;
+}
+
+input {
+    width: 25rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    border-radius: 1.5rem;
+    border: solid 1px gray;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+input[type="submit"] {
+    width: 8rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth_switch {
+    width: fit-content;
+}

@@ -49,8 +49,8 @@
                   articleReg1 = /[^a-zA-Z0-9 ]+/g;
                   articleReg2 = /[^a-zA-Z0-9]+/g;
                   slug = `/blog/${article.slug}`
-                  editSlug = `${slug}/edit`
-                  deleteSlug = `${slug}/delete`
+                  editSlug = `/editor${slug}/edit`
+                  deleteSlug = `/editor${slug}/delete`
                 %>
                 <td><a href=<%=slug%> ><h2><%=title%></h2> </a></td>
                 <td><%= article.publish_date.toDateString() %>

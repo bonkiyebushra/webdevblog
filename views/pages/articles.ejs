@@ -7,6 +7,7 @@
     <header><%- include('../partials/header'); %></header>
 
     <main>
+      <!-- <%=locals.messages.message%> -->
       <div id="main_section">
         <div class="articles">
           <% articles.forEach((article)=> { %>
@@ -18,7 +19,7 @@
               slug = `/blog/${title.replace(articleReg1,"").replace(articleReg2,"-").toLowerCase()}`
               bodySample = article.body_sample == null ? "" : article.body_sample+"..."
             %>
-            <a href=<%=slug%> ><h2><%=title%></h2> </a>
+            <h2><a href=<%=slug%> ><%=title%> </a></h2>
             <p><%= article.publish_date.toDateString() %></p>
             <p><%= article.body_sample %></p>
             <a href=<%=slug%> >Read more</h2> </a>

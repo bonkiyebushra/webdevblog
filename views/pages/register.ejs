@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head',{pageTitle:`register`}); %>
+        <link rel="stylesheet" href="/auth_page_styles.css" />
+</head>
+
+<body>
+    <form id="register_form" method="post">
+        <ul id="errors">
+          <% if (locals.messages.error){%><li><%= locals.messages.error %></li><%}%>
+        </ul>
+        <div>
+            <!-- DELETE VALUE ATTRIBUTE LATER -->
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" value="a" required />
+        </div>
+        <div>
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" value="b" required />
+        </div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" name="username" value="c" required />
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="d@gmail.com" required />
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" required />
+            <!-- pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,100}$" -->
+        </div>
+        <div>
+            <label for="password_confirm">Confirm Password:</label>
+            <input id="password_confirm" type="password" name="password_confirm" required />
+        </div>
+        <input type="submit" value="Register" />
+
+        <a href="/login" class="auth_switch">Login</a>
+    </form>
+    <script>
+        let passwordInput = document.getElementById("password");
+        let passwordConfirmInput = document.getElementById("password_confirm");
+        let errorsListEle = document.getElementById("errors");
+        let errors = [];
+        let form = document.getElementById("register_form")
+
+        passwordConfirmInput.addEventListener("change", () => {
+            if (passwordInput.value !== passwordConfirmInput.value) {
+                errors.push("Passwords do not match")
+                updateErrorsListEle()
+            }
+        });
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let formValid = passwordsMatch() && emailIsValid();
+
+            if (formValid) event.target.submit();
+        })
+
+        const passwordsMatch = () => {
+            if (passwordInput.value !== passwordConfirmInput.value) {
+                if (errors.indexOf("Passwords do not match") === -1) {
+                    errors.push("Passwords do not match")
+                    updateErrorsListEle();
+                }
+                return false;
+            }
+            return true;
+        }
+
+        const emailIsValid = () => {
+            return true;  //Add additonal validation later
+        }
+
+        const updateErrorsListEle = () => {
+            errorsListEle.innerHTML = ""
+            errors.forEach((error) => {
+                let errorLiItem = document.createElement("li");
+                errorLiItem.innerText = error;
+                errorsListEle.appendChild(errorLiItem)
+            })
+        }
+
+        
+    </script>
+</body>
+
+</html>
