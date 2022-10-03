@@ -3,11 +3,23 @@
 
 <head>
     <%- include('../partials/head',{pageTitle:`Login`}); %>
-    <link rel="stylesheet" href="/auth_page_styles.css">
+        <link rel="stylesheet" href="/auth_page_styles.css">
 </head>
 
 <body>
-    <form method="post">  
+    <form method="post">
+        
+        <ul id="errors">
+            
+            
+            <% if (messages.error){%>
+                <% for (let i =0; i < messages.error.length;i++) { %> 
+                    <li>
+                        <%= messages.error[i] %>
+                    </li>
+                <%}%>
+            <%}%>
+        </ul>
         <div>
             <label for="">Username:</label>
             <input type="text" name="username" required>
@@ -21,7 +33,7 @@
         <a href="/register" class="auth_switch">Register</a>
     </form>
     <script>
-        
+
     </script>
 </body>
 

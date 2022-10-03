@@ -70,15 +70,16 @@ main {
   font-family: "Lato", sans-serif;
 }
 
-#post_body {
-  /* text-align: center; */
+h1 {
+  margin-bottom: .5rem;
 }
 
-h1 {
+#article_header {
   margin-bottom: 2rem;
 }
 
-h2 {
+h2, h3 {
+  margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
@@ -113,8 +114,6 @@ a * {
   height: 2rem;
 }
 
-
-
 /* Edit table */
 
 table {
@@ -135,4 +134,25 @@ footer {
 
 #errors {
   color: rgb(160, 29, 29);
+}
+
+input[type="text"]:read-only,input[type="email"]:read-only {
+  background-color: rgba(19, 79, 19, 0.098);
+  border:solid 1px black;
+}
+
+.tags_container {
+  width: 20rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+}
+
+.tag_link {
+  width: 5rem;
+  margin-right: .25rem;
+  background-color: #f5fbff;
+  border: solid .5px rgba(59, 59, 134, 0.096);
+  text-decoration: none;
+  padding: .1rem .3rem;
+  border-radius: .25rem;
 }

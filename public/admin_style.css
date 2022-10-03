@@ -1,0 +1,67 @@
+body {
+    display: flex;
+  flex-direction: row;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 100;
+  border: 1px solid gray;
+  width: 10rem;
+  padding: 0.5rem;
+}
+
+#admin_nav {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    padding-left: 2rem;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100vh;
+}
+
+#edit_user_form {
+    margin-top: 2rem;
+}
+
+table {
+    margin: auto;
+}
+
+td {
+    width: 12rem;
+}
+
+hr {
+    margin: 1rem 0;
+}
+
+#profile_pic_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    width: 5rem;
+    margin: 0 auto;
+    border: solid 1px gray;
+    border-radius: 4rem;
+    padding: 0;
+}
+
+#profile_pic {
+  height: 3rem;
+  width: 3rem;
+}
+
+.user_form_field {
+    margin-bottom: 1rem;
+}
+
+.user_form_field label {
+    display: block;
+}

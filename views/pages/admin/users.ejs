@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head') %>
+    <link rel="stylesheet" href="/admin_style.css">
+</head>
+
+<body class="container">
+
+  <aside>
+    <%- include('../../partials/admin_aside'); %>
+  </aside>
+  <main>
+
+    <h1>Manage Users</h1>
+
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Name</th>
+        <th>User Type</th>
+        <th>Actions</th>
+      </tr>
+      <% users.forEach((user)=> { %>
+        <tr class="user">
+          <td><%= user.username %></td>
+          <td><%=`${user.first_name} ${user.last_name}` %></td>
+          <td><%=user.type%></td>
+          <td class="actions_column">
+            <a href=<%= `/admin/users/${user.username}/edit` %> >Edit</a>
+            <a href=<%= `/admin/users/${user.username}/delete`  %> class="delete" >Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+    </table>
+    
+  </main>
+
+  <script>
+    // let userTypeSelect = document.getElementById("user_type_select");
+
+  </script>
+</body>
+
+</html>

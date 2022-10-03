@@ -15,13 +15,32 @@
   <main>
     <form action="" method="post">
       <div id="top">
-        <div class="label_input" id="article_title">
-          <label>Title</label>
-          <input type="text" name="title" required/>
+        <div id="top_left">
+          <div class="label_input" id="article_title">
+            <label>Title: </label>
+            <input type="text" name="title" required/>
+          </div>
+          <div class="label_input" id="article_sample">
+            <label>Sample: </label>
+            <textarea type="text" name="sample"></textarea>
+          </div>
         </div>
-        <div class="label_input" id="article_sample">
-          <label>Sample</label>
-          <textarea type="text" name="sample"></textarea>
+        <div id="top_right">
+          <div id="tag_box">
+            <p>Tags: </p>
+          <div id="checkbox-dropdown">
+            Choose Tags
+            <ul id="checkbox-dropdown-list">
+
+              <% tags.forEach((tag)=> {%>
+                <li>
+                  <label>
+                    <input type="checkbox" value=<%=tag.name%> name="tags" /><%=tag.name%></label>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+          </div>
         </div>
       </div>
       <div id="bottom">
@@ -50,6 +69,19 @@
     <%- include('../partials/footer'); %>
   </footer>
   <script>
+
+    let checkbox_dropdown = document.getElementById("checkbox-dropdown");
+    let checkbox_dropdown_list = document.getElementById("checkbox-dropdown-list");
+
+    checkbox_dropdown.addEventListener('click',()=> {
+      checkbox_dropdown.classList.toggle("is-active")
+      console.log(checkbox_dropdown.classList)
+    })
+
+    checkbox_dropdown_list.addEventListener("click",(e)=> {
+      e.stopPropagation()
+    })
+
     let conv = new showdown.Converter({emoji:true,strikethrough:true, tables:true});
     let bodyEle = document.getElementById("body");
     let previewEle = document.getElementById("body_preview");

@@ -20,6 +20,11 @@
               bodySample = article.body_sample == null ? "" : article.body_sample+"..."
             %>
             <h2><a href=<%=slug%> ><%=title%> </a></h2>
+            <div class="tags_container">
+              <% article.tags.forEach((tag)=> {%>
+                <a class="tag_link" href="#"><%=tag.tag_name%></a>
+              <%})  %>
+            </div>
             <p><%= article.publish_date.toDateString() %></p>
             <p><%= article.body_sample %></p>
             <a href=<%=slug%> >Read more</h2> </a>

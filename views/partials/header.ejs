@@ -6,9 +6,13 @@
   <a href="/blog">Articles</a>
   <!-- <a href="/about">About</a> -->
 </nav>
-<% if(typeof userType !=='undefined' && userType == "editor") { %>
-<nav>
-  <a href="/editor/blog/manage_posts">Manage Posts</a>
-  <a href="/editor/blog/new">Create new post</a>
-</nav>
+<% if(typeof userType !=='undefined' && (userType === 'Editor' || userType ==='Admin')) { %>
+  <nav>
+    <%if(userType == "Admin"){ %>
+      <a href="/admin">Admin dashboard</a>
+    <%}%>
+    <a href="/editor/blog/manage_posts">Manage Posts</a>
+    <a href="/editor/blog/new">Create new post</a>
+    <a href="/logout">Logout</a>
+  </nav>
 <%}%>

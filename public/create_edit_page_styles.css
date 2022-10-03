@@ -42,6 +42,10 @@ form {
   align-items: center;
 }
 
+#article_title, #article_sample {
+  width: 100%;
+}
+
 .label_input label {
   display: inline-block;
   width: 3.5rem;
@@ -63,8 +67,20 @@ form {
 } */
 
 #top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 50%; */
+  margin-bottom: .5rem;
+}
+
+#top_left {
   width: 50%;
-  /* margin-bottom: .5rem; */
+
+}
+
+#top_right {
+  margin-right: 33.5%;
 }
 
 #bottom {
@@ -96,7 +112,7 @@ form {
   width: 1.5rem;
   top: .5rem;
   right:.5rem;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 #create_update_btn {
@@ -109,4 +125,87 @@ form {
   border: 1px solid black;
   margin-top: 1rem;
   border-radius: .25rem;
+}
+
+#tag_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#tag_box p {
+  margin-right: 1rem;
+}
+
+
+#checkbox-dropdown {
+  position: relative;
+  width: 250px;
+  border: 1px solid #aaa;
+  padding: 10px;
+  position: relative;
+  margin: 0 auto;
+  z-index: 2;
+  user-select: none;
+}
+
+/* Display CSS arrow to the right of the dropdown text */
+#checkbox-dropdown:after {
+  /* position: relative; */
+  content:'';
+  height: 0;
+  position: absolute;
+  width: 0;
+  border: 6px solid transparent;
+  border-top-color: #000;
+  top: 50%;
+  right: 10px;
+  margin-top: -3px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+#checkbox-dropdown.is-active:after {
+  border-bottom-color: #000;
+  border-top-color: #fff;
+  margin-top: -9px;
+}
+
+#checkbox-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 100%; /* align the dropdown right below the dropdown text */
+  border: inherit;
+  border-top: none;
+  left: -.5px; /* align the dropdown to the left */
+  right: -1px; /* align the dropdown to the right */
+  opacity: 0; /* hide the dropdown */
+  background-color: white;
+  transition: opacity 0.4s ease-in-out;
+  height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+  pointer-events: none; /* avoid mouse click events inside the dropdown */
+}
+.is-active #checkbox-dropdown-list {
+  opacity: 1; /* display the dropdown */
+  pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+
+#checkbox-dropdown-list li label {
+  display: block;
+  border-bottom: 1px solid silver;
+  padding: 10px;
+ 
+  transition: all 0.2s ease-out;
+}
+
+#checkbox-dropdown-list input {
+ margin-right: .5rem;
+}
+
+#checkbox-dropdown-list li label:hover {
+  background-color: #555;
+  color: white;
 }

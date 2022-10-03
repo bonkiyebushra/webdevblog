@@ -53,8 +53,8 @@
                   deleteSlug = `/editor${slug}/delete`
                 %>
                 <td><a href=<%=slug%> ><h2><%=title%></h2> </a></td>
-                <td><%= article.publish_date.toDateString() %>
-                <td class="sample_column"><%= article.body_sample %>
+                <td><%= article.publish_date.toDateString() %></td>
+                <td class="sample_column"><%= article.body_sample %></td>
                 <td class="actions_column">
                   <a href=<%= slug %> class="show" >Show</a>
                   <a href=<%= editSlug %> >Edit</a>

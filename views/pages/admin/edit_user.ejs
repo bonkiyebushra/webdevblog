@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head') %>
+  <link rel="stylesheet" href="/admin_style.css">
+</head>
+
+<body class="container">
+  <aside>
+    <%- include('../../partials/admin_aside'); %>
+  </aside>
+  <main>
+    <form id="edit_user_form" action=<%=`/admin/users/${user.username}/update_type`%> method="post">
+      
+      <div class="user_form_field">
+        <label>First Name:</label>
+        <input type="text" value=<%=user.first_name%> readonly>
+      </div>
+      <div class="user_form_field">
+        <label>Last Name:</label>
+        <input type="text" value=<%=user.last_name%> readonly>
+      </div>
+      <div class="user_form_field">
+        <label>Username:</label>
+        <input type="text" value=<%=user.username%> readonly>
+      </div>
+      <div class="user_form_field">
+        <label>Email:</label>
+        <input type="email" value=<%=user.email%> readonly>
+      </div>
+      <div class="user_form_field">
+        <label for="type">User Type:</label>
+        <select name="type" id="user_type_select">
+          <% userTypes.forEach(userType => { %>
+            <option id="<%=userType%>_user" value="<%= userType %>" <% if(userType == user.type){ %> selected=true <%}%> ><%= userType %></option>
+          <% }) %>
+        </select>
+      </div>
+      <input type="submit" value="Update Status">
+    </form>
+  </main>
+</body>
+</html>

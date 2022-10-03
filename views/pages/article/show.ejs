@@ -7,8 +7,15 @@
     <header><%- include('../../partials/header'); %></header>
     <main>
       <div id="main_section">
-        <h1><%= article.title%></h1>
-        <p><%= article.date %></p>
+        <div id="article_header">
+          <h1><%= article.title%></h1>
+          <p><%= article.publish_date.toDateString() %></p>
+          <div class="tags_container">
+            <% article.tags.forEach((tag)=> {%>
+              <a class="tag_link" href="#"><%=tag.tag_name%></a>
+            <%})  %>
+          </div>
+        </div>
         <div id="post_body"><%- converter.makeHtml(article.body)%></div>
       </div>
       <%- include("../../partials/recent_posts"); %>
